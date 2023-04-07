@@ -1,6 +1,7 @@
 // Add imports above this line
 import { galleryItems } from './gallery-items';
 // Change code below this line
+import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 const list = document.querySelector('.gallery');
 list.style.listStyle = `none`;
@@ -14,7 +15,7 @@ const cards = galleryItems.map(
 );
 list.insertAdjacentHTML('beforeend', cards.join(''));
 
-import SimpleLightbox from 'simplelightbox';
+
 
 let gallery = new SimpleLightbox('.gallery a', { captionDelay: 250 });
 

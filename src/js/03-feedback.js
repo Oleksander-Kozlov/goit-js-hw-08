@@ -1,7 +1,9 @@
 import throttle from 'lodash.throttle';
 
 const form = document.querySelector('.feedback-form');
-console.dir(form.firstElementChild);
+const input = form.email;
+const textArea = form.message;
+console.log(input, textArea);
 
 const userDataArr = JSON.parse(
   localStorage.getItem('feedback-form-state')) ?? [];
@@ -28,6 +30,7 @@ function handleSubmit(event) {
   }
 //   if (JSON.parse(localStorage.getItem('feedback-form-state'))) {
 //   }
+ 
  const userMail = JSON.parse(localStorage.getItem('feedback-form-state'));
  form.firstChild.value = userMail.pop().email;
 }
