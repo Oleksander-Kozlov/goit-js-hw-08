@@ -17,8 +17,7 @@ let userTime = Number
     console.log(userTime);
 const onTimeupdate = function (data) { 
   timeUpd.push(data.seconds);
-  localStorage.setItem('videoplayer_current_time', JSON.stringify(timeUpd));
- 
+  localStorage.setItem('videoplayer_current_time', JSON.stringify(timeUpd)); 
 };
 
 player.on('timeupdate', throttle(onTimeupdate, 1000));
