@@ -5,7 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 // Change code below this line
 
 const list = document.querySelector('.gallery');
-list.style.listStyle = `none`;
+// list.style.listStyle = `none`;
 list.classList.add('js-gallery');
 const cards = galleryItems.map(
   ({ preview, original, description }) => `<li class="gallery__item">
