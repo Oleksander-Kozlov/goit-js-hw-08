@@ -1,8 +1,9 @@
 // Add imports above this line
 import { galleryItems } from './gallery-items';
-// Change code below this line
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+// Change code below this line
+
 const list = document.querySelector('.gallery');
 list.style.listStyle = `none`;
 list.classList.add('js-gallery');
