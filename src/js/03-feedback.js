@@ -3,14 +3,33 @@ import throttle from 'lodash.throttle';
 const form = document.querySelector('.feedback-form');
 const input = form.email;
 const textArea = form.message;
-console.log(input, textArea);
+const userData = {
+  email: '',
+  message: '',
+};
 
-const userDataArr = JSON.parse(
-  localStorage.getItem('feedback-form-state')) ?? [];
+// Відстежуй на формі подію input, і щоразу записуй у локальне сховище об'єкт з полями email і message, у яких зберігай поточні значення полів форми. Нехай ключем для сховища буде рядок "feedback-form-state".
+form.addEventListener('input', throttle(onInput, 500, { trailing: false }));
+function onInput(event) {
+  const userData = {
+    email: input.value.trim(),
+    message: event.currentTarget.elements.message.value.trim(),
+  };
+  localStorage.setItem('feedback-form-state', JSON.stringify(userData));
+}
 
+// Під час завантаження сторінки перевіряй стан сховища, і якщо там є збережені дані, заповнюй ними поля форми. В іншому випадку поля повинні бути порожніми.
+if (JSON.parse(localStorage.getItem('feedback-form-state'))) {
+  const localData = JSON.parse(localStorage.getItem('feedback-form-state'));
+  input.value = Object.values(localData)[0];
+  textArea.value = Object.values(localData)[1];
+}
+
+// Під час сабміту форми очищуй сховище і поля форми, а також виводь у консоль об'єкт з полями email, message та їхніми поточними значеннями.
 form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
+  
   event.preventDefault();
 
   const {
@@ -20,21 +39,11 @@ function handleSubmit(event) {
   if (email.value.trim() === '' || message.value.trim() === '') {
     return alert("Шановний(а), будь ласка, обов'язково заповніть всі поля!");
   } else {
-    const userData = {
-      [email.name]: event.currentTarget.elements.email.value.trim(),
-      [message.name]: event.currentTarget.elements.message.value.trim(),
-    };
-    
-    localStorage.setItem('feedback-form-state', JSON.stringify(userData));
-    console.log(userData);
+    localStorage.removeItem('feedback-form-state');
+    console.log(
+      `{email: ${event.currentTarget.elements.email.value.trim()}, message: ${event.currentTarget.elements.message.value.trim()}}`
+    );
+    input.value = '';
+    textArea.value = '';
   }
-//   if (JSON.parse(localStorage.getItem('feedback-form-state'))) {
-//   }
- 
- const userMail = JSON.parse(localStorage.getItem('feedback-form-state'));
-//  form.firstChild.value = userMail
-
-  // input.value = userMail.email;
-  // textArea.value = userMail.message;
-  
-  // console.log(userMail.email, userMail.message)
+}
