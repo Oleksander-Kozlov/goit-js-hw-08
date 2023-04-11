@@ -1,7 +1,7 @@
 import Player from "@vimeo/player";
 import throttle from "lodash.throttle";
 // перевіряю чи пусте локальне сховище
-const timeUpd = JSON.parse(localStorage.getItem('videoplayer_current_time')) ?? [];
+const timeUpd = JSON.parse(localStorage.getItem('videoplayer_current_time')) ?? 0;
 // додаю програвач
 const player = new Player('vimeo-player');
 // час відтворення користувача
@@ -10,14 +10,17 @@ let userTime = Number
   )) {
     userTime = Number(JSON.parse(
       localStorage.getItem('videoplayer_current_time')
-    ).slice(-1)[0]);
+    ));
   }
  else { userTime = 0 } ;
 
 // зберігаю актуальний час у сховище 
 const onTimeupdate = function (data) { 
-  timeUpd.push(data.seconds);
-  localStorage.setItem('videoplayer_current_time', JSON.stringify(timeUpd)); 
+  
+  localStorage.setItem(
+    'videoplayer_current_time',
+    JSON.stringify(data.seconds)
+  ); 
 };
 // затримка збереження часу 1с
 player.on('timeupdate', throttle(onTimeupdate, 1000));
